@@ -1,0 +1,57 @@
+DATA:
+      gv_order TYPE BAPIMEPOHEADER-PO_NUMBER,
+      gst_header TYPE BAPIMEPOHEADER,
+      lti_return TYPE STANDARD TABLE OF BAPIRET2,
+      lti_poitem TYPE STANDARD TABLE OF BAPIMEPOITEM,
+      lti_poacount TYPE STANDARD TABLE OF BAPIMEPOACCOUNT,
+      lti_accheader TYPE STANDARD TABLE OF BAPIMEPOCONDHEADER,
+      lti_services  TYPE STANDARD TABLE OF BAPIESLLC,
+      lti_pservices TYPE STANDARD TABLE OF BAPIESKLC.
+
+
+START-OF-SELECTION.
+
+gv_order = 'XXXXXXX'. "Orden del Pedido
+
+CALL FUNCTION 'BAPI_PO_GETDETAIL1'
+  EXPORTING
+    purchaseorder            = gv_order
+*   ACCOUNT_ASSIGNMENT       = ' '
+*   ITEM_TEXT                = ' '
+*   HEADER_TEXT              = ' '
+*   DELIVERY_ADDRESS         = ' '
+*   VERSION                  = ' '
+*   SERVICES                 = ' '
+*   SERIALNUMBERS            = ' '
+*   INVOICEPLAN              = ' '
+ IMPORTING
+   POHEADER                 = gst_header "Estructura de cabecera
+*   POEXPIMPHEADER           =
+ TABLES
+   RETURN                   = lti_return "Tabla de mensajes
+   POITEM                   = lti_poitem "Tabla de items
+*   POADDRDELIVERY           =
+*   POSCHEDULE               =
+   POACCOUNT                = lti_poacount "Tabla cuentas
+*   POCONDHEADER             = lti_accheader
+*   POCOND                   =
+*   POLIMITS                 =
+*   POCONTRACTLIMITS         =
+   POSERVICES               = lti_services "Tabla posiciones de servicios
+   POSRVACCESSVALUES        = lti_pservices "Tabla imputaciones a servicio
+*   POTEXTHEADER             =
+*   POTEXTITEM               =
+*   POEXPIMPITEM             =
+*   POCOMPONENTS             =
+*   POSHIPPINGEXP            =
+*   POHISTORY                =
+*   POHISTORY_TOTALS         =
+*   POCONFIRMATION           =
+*   ALLVERSIONS              =
+*   POPARTNER                =
+*   EXTENSIONOUT             =
+*   SERIALNUMBER             =
+*   INVPLANHEADER            =
+*   INVPLANITEM              =
+*   POHISTORY_MA             =
+          .
